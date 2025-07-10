@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import mongoose from "mongoose";
 import PetDTO from "../dto/Pet.dto.js";
 import { usersService, petsService } from "../services/index.js";
