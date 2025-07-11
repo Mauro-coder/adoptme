@@ -1,0 +1,193 @@
+openapi: 3.0.1
+info:
+  title: Documentación del poder y del saber
+  version: 1.0.0
+  description: API pensada para clase de Swagger
+
+paths:
+  /api/users/:
+    get:
+      summary: Obtiene todos los usuarios
+      tags:
+        - Users
+      responses:
+        "200":
+          description: Lista de usuarios obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo de conexión con la base de datos
+
+  /api/users/{uid}:
+    get:
+      summary: Obtiene un solo usuario a partir de su Id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: Id del usuario que se desea solicitar.
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Devuelve un usuario por el id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    $ref: '#/components/schemas/User'
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo de conexión con la base de datos
+
+    put:
+      summary: Actualiza un usuario a partir de su id
+      tags:
+        - Users
+      parameters:
+        - name: uid
+          in: path
+          required: true
+          description: Id del usuario que se desea solicitar.
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateUser'
+      responses:
+        "200":
+          description: Devuelve un usuario por el id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: User updated
+                    
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo de conexión con la base de datos
+  /api/sessions/register:
+    post:
+      summary: Crea Y registra un usuario
+      tags:
+        - Autentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/createUser'
+      responses:
+        "200":
+          description: Devuelve el id del usuario creado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  payload:
+                    type: string
+                    example: 684468463c97912300ffb2cd
+
+                    
+        "500":
+          description: Error interno del servidor, usualmente generado por una query defectuosa o un fallo de conexión con la base de datos
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: Id autogenerado de mongo
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+        email:
+          type: string
+          description: Correo del usuario, este campo es único
+        password:
+          type: string
+          description: Contraseña Hasheada del usuario
+        role:
+          type: string
+          description: Rol del usuario
+        pets:
+          type: array
+          description: Mascotas
+        __v:
+          type: number
+          description: Versión del documento
+      example:
+        _id: "638b8c323f3a4b3be6dc397e"
+        first_name: Mauricio
+        last_name: Espinosa
+        email: correoma@correo.com
+        password: $2b$10$jzC7z6oTE0FkbhkYI1ly.ks4IOotcgt3Ddzu/VhxUsrdsIDp2jka
+        role: admin
+        pets: []
+        __v: 0
+
+    updateUser:
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: Nombre del usuario
+        last_name:
+          type: string
+          description: Apellido del usuario
+      example:
+        first_name: Marisol
+        last_name: Cadena
+    createUser:
+        type: object
+        properties:
+          first_name:
+            type: string
+            description: Nombre del usuario
+          last_name:
+            type: string
+            description: Apellido del usuario
+          email:
+            type: string
+            description: Correo del usuario, este campo es único
+          password:
+            type: string
+            description: Contraseña Hasheada del usuario
+        example:
+          first_name: Mauricio
+          last_name: Espinosa
+          email: correoma33333@correo.com
+          password: 1234ewdfdd

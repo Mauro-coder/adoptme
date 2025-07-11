@@ -1,5 +1,5 @@
-import { defineConfig } from '@playwright/test';
+// import { defineConfig } from '@playwright/test';
 
-export default defineConfig({
-  reporter: [['@artilleryio/playwright-reporter', { name: 'My Tests' }]],
-});
+// export default defineConfig({
+//   reporter: [['@artilleryio/playwright-reporter', { name: 'My Tests' }]],
+// });

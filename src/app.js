@@ -11,6 +11,9 @@ import mocksRouter from "./routes/mocks.router.js";
 import { logger } from "./utils/logger.js";
 import cluster from "cluster";
 import { cpus } from "os";
+import { swaggerOptions } from "./utils/swaggerOptions.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUiExpress from "swagger-ui-express"
 
 configDotenv();
 
@@ -20,6 +23,9 @@ const connection = mongoose.connect(process.env.MONGO_URI);
 
 app.use(express.json());
 app.use(cookieParser());
+
+const specs = swaggerJSDoc(swaggerOptions);
+app.use("/apidocs", swaggerUiExpress.serve, swaggerUiExpress.setup(specs));
 
 app.use("/api/users", usersRouter);
 app.use("/api/pets", petsRouter);
