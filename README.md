@@ -73,7 +73,8 @@ Crea un archivo `.env` en la raíz con al menos las siguientes variables:
 
 ```env
 PORT=
-MONGO_URL=
+MONGO_URI=
+MODE=
 JWT_SECRET=
 ```
 
