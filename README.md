@@ -72,9 +72,9 @@
 Crea un archivo `.env` en la raíz con al menos las siguientes variables:
 
 ```env
-PORT=8080
-MONGO_URL=mongodb://localhost:27017/adoptme
-JWT_SECRET=tu_secreto_jwt
+PORT=
+MONGO_URL=
+JWT_SECRET=
 ```
 
 ---
