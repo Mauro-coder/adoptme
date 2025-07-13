@@ -1,3 +1,4 @@
+import userModel from "../dao/models/User.js";
 import { usersService } from "../services/index.js"
 
 const getAllUsers = async(req,res)=>{
@@ -28,9 +29,24 @@ const deleteUser = async(req,res) =>{
     res.send({status:"success",message:"User deleted"})
 }
 
+const createDocument = async (req,res) =>{
+    const files = req.files;
+    const {uid}= req.params
+    const documents = files.map(file =>{
+        return {
+            name: files.filename,
+            reference:file.path
+        }
+    })
+    await userModel.updateOne({_id:uid},{$push:{documents:{$each:documents}}})
+    res.send({status:"success",message:"documents created"})
+
+}
+
 export default {
     deleteUser,
     getAllUsers,
     getUser,
-    updateUser
+    updateUser,
+    createDocument,
 }
